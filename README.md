@@ -2,25 +2,19 @@
 
 명지대학교 자연캠퍼스 인터넷 프로그래밍 팀 프로젝트 server
 
----
-
-### Requirements
+## Requirements
 
 - Node.js
 - yarn
 
----
-
-### How to start development server
+## How to start development server
 
 ```
 yarn install
 yarn dev
 ```
 
----
-
-### Commit conventions
+## Commit conventions
 
 - Feat: 새로운 기능을 추가할 경우
 - Fix: 버그를 고친경우
