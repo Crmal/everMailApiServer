@@ -6,10 +6,8 @@
 
 ### Requirements
 
-```
 - Node.js
 - yarn
-```
 
 ---
 
@@ -24,11 +22,9 @@ yarn dev
 
 ### Commit conventions
 
-```
 - Feat: 새로운 기능을 추가할 경우
 - Fix: 버그를 고친경우
 - !HOTFIX: 급하게 치명적인 버그를 고쳐야하는 경우
 - Style: 코드 포맷 변경, 코드 수정을 하는경우
 - Refactor: 리팩토링하는 경우
 - Chore: 그 외
-```
