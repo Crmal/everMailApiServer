@@ -8,6 +8,6 @@ const api = Router();
 
 api.use('/auth', authRouter);
 api.use('/user', userRouter);
-api.user('/timeTable', timeTableRouter);
+api.use('/timeTable', timeTableRouter);
 
 export default api;

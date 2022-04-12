@@ -172,3 +172,9 @@ dist
 .svelte-kit
 
 # End of https://www.toptal.com/developers/gitignore/api/node,macos
+
+# config
+config.json
+
+# databases
+everyMail.db
