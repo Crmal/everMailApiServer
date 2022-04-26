@@ -2,6 +2,8 @@ import { Sequelize } from 'sequelize';
 
 import config from '../../config';
 
+import User from './user';
+
 const sequelize = new Sequelize(
   config.development.database,
   config.development.username,
@@ -11,6 +13,11 @@ const sequelize = new Sequelize(
 
 const db = {
   sequelize,
+  User,
 };
+
+User.init();
+
+User.associate(db);
 
 export default db;
