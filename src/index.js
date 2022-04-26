@@ -19,7 +19,7 @@ sequelize.sequelize // 시퀄라이즈 연결
     // eslint-disable-next-line no-console
     console.log('데이터베이스 연결 성공');
   })
-  .catch(err => {
+  .catch((err) => {
     console.error(err);
   });
 
