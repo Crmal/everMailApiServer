@@ -9,6 +9,7 @@
     "sourceType": "module"
   },
   "rules": {
+    "arrow-parens": [2, "as-needed"],
     "camelcase": "error",
     "comma-dangle": ["error", "always-multiline"],
     "no-console": ["error", { "allow": ["warn", "error"] }],
