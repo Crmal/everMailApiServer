@@ -19,7 +19,7 @@ class User extends Model {
       {
         sequelize,
         modelName: 'User',
-        tableName: 'user',
+        tableName: 'users',
         charset: 'utf8mb4',
         collate: 'utf8mb4_general_ci',
       },
@@ -27,7 +27,14 @@ class User extends Model {
   }
 
   static associate(db) {
-    db.User.hasOne(db.Apply, { foreignKey: { name: 'userId', allowNull: false }, sourceKey: 'id' });
+    db.User.hasMany(db.EmailTable, {
+      foreignKey: { name: 'sand_id', allowNull: false },
+      sourceKey: 'id',
+    });
+    db.User.hasOne(db.UserTimeTable, {
+      foreignKey: { name: 'user_id', allowNull: false },
+      sourceKey: 'id',
+    });
   }
 }
 
