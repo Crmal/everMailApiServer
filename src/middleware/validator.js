@@ -54,3 +54,23 @@ export function signValidator(req, res, next) {
   }
   return next();
 }
+
+export function loginValidator(req, res, next) {
+  // eslint-disable-next-line
+  const { nickName, password } = req.body;
+  if (!nickName) {
+    return res.json({
+      error: {
+        message: '아이디를 입력해주세요',
+      },
+    });
+  }
+  if (!regPassword.test(password)) {
+    return res.status(400).json({
+      error: {
+        message: '비밀번호는 공백 없이, 영문,숫자,특수문자 혼합한 8~20자로 입력해주세요',
+      },
+    });
+  }
+  return next();
+}
