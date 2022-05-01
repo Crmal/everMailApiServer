@@ -33,3 +33,24 @@ auth.post('/sign-up', async (req, res) => {
     },
   });
 });
+
+auth.post('/sign-in', async (req, res) => {
+  // eslint-disable-next-line
+  const { nickName, password } = req.body;
+  const user = await User.findOne({ where: { nickName } });
+  const jwt = sign(
+    {
+      id: user.id,
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: '1days',
+      issuer: 'everyMail',
+    },
+  );
+  return res.json({
+    data: {
+      jwt,
+    },
+  });
+});
