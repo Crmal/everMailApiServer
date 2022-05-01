@@ -2,16 +2,16 @@ import bcrypt from 'bcrypt';
 import { Router } from 'express';
 import { sign } from 'jsonwebtoken';
 
+import { loginValidator, signValidator } from '../../middleware/validator';
 import User from '../../models/user';
 
 const auth = Router();
 
-auth.post('/sign-up', async (req, res) => {
+auth.post('/sign-up', signValidator, async (req, res) => {
   // eslint-disable-next-line
-  const { name, id_name, password, email, phone } = req.body;
+  const { name, nickName, password, email, phone } = req.body;
   const hash = await bcrypt.hash(password, 10);
-  // eslint-disable-next-line camelcase
-  const userData = await User.findOne({ where: { id_name } });
+  const userData = await User.findOne({ where: { nickName } });
   if (userData) {
     return res.status(409).json({
       error: {
@@ -22,7 +22,7 @@ auth.post('/sign-up', async (req, res) => {
   await User.create({
     name,
     // eslint-disable-next-line camelcase
-    id_name,
+    nickName,
     password: hash,
     email,
     phone,
@@ -34,7 +34,7 @@ auth.post('/sign-up', async (req, res) => {
   });
 });
 
-auth.post('/sign-in', async (req, res) => {
+auth.post('/sign-in', loginValidator, async (req, res) => {
   // eslint-disable-next-line
   const { nickName, password } = req.body;
   const user = await User.findOne({ where: { nickName } });
