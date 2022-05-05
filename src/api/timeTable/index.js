@@ -56,6 +56,20 @@ timeTable.post('/', async (req, res) => {
     raw: true,
   });
   const nullCount = Object.values(userTimeTables).indexOf(null);
+  if (Object.values(userTimeTables).indexOf(id) !== -1) {
+    return res.status(401).json({
+      error: {
+        message: '이미 신청한 시간표입니다',
+      },
+    });
+  }
+  if (nullCount === -1) {
+    return res.status(401).json({
+      error: {
+        message: '시간표는 9개까지만 추가가 가능합니다.',
+      },
+    });
+  }
   await UserTimeTable.update(
     {
       [attributes[nullCount]]: id,
