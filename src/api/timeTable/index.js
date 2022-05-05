@@ -1,6 +1,10 @@
+import { parse } from 'url';
+
 import { Router } from 'express';
 import { verify } from 'jsonwebtoken';
+import { Op } from 'sequelize';
 
+import { loginChecker } from '../../middleware/checker';
 import { loginValidator } from '../../middleware/validator';
 import FullTimeTable from '../../models/fullTimeTable';
 import UserTimeTable from '../../models/userTimeTable';
@@ -43,7 +47,7 @@ timeTable.get('/', loginValidator, async (req, res) => {
   });
 });
 
-timeTable.post('/', async (req, res) => {
+timeTable.post('/', loginChecker, async (req, res) => {
   // eslint-disable-next-line prefer-destructuring
   const { id } = req.body;
   const token = req.header('x-access-token');
@@ -57,14 +61,14 @@ timeTable.post('/', async (req, res) => {
   });
   const nullCount = Object.values(userTimeTables).indexOf(null);
   if (Object.values(userTimeTables).indexOf(id) !== -1) {
-    return res.status(401).json({
+    return res.status(403).json({
       error: {
-        message: '이미 신청한 시간표입니다',
+        message: '이미 신청한 시간표입니다.',
       },
     });
   }
   if (nullCount === -1) {
-    return res.status(401).json({
+    return res.status(403).json({
       error: {
         message: '시간표는 9개까지만 추가가 가능합니다.',
       },
@@ -84,7 +88,7 @@ timeTable.post('/', async (req, res) => {
   });
 });
 
-timeTable.delete('/', async (req, res) => {
+timeTable.delete('/', loginChecker, async (req, res) => {
   // eslint-disable-next-line prefer-destructuring
   const { id } = req.body;
   const token = req.header('x-access-token');
@@ -108,6 +112,33 @@ timeTable.delete('/', async (req, res) => {
   return res.json({
     data: {
       message: '정상적으로 삭제되었습니다.',
+    },
+  });
+});
+
+timeTable.get('/entire', loginChecker, async (req, res) => {
+  const { query } = parse(req.url, true);
+  let timeTables;
+  if (query.subject_name) {
+    timeTables = await FullTimeTable.findAll({
+      where: {
+        subject_name: {
+          [Op.like]: `%${query.subject_name}%`,
+        },
+      },
+    });
+  } else {
+    timeTables = await FullTimeTable.findAll({
+      where: {
+        subject_name: {
+          [Op.like]: `%${query.subject_name}%`,
+        },
+      },
+    });
+  }
+  return res.json({
+    data: {
+      timeTables,
     },
   });
 });
