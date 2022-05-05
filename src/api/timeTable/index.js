@@ -128,13 +128,7 @@ timeTable.get('/entire', loginChecker, async (req, res) => {
       },
     });
   } else {
-    timeTables = await FullTimeTable.findAll({
-      where: {
-        subject_name: {
-          [Op.like]: `%${query.subject_name}%`,
-        },
-      },
-    });
+    timeTables = await FullTimeTable.findAll({});
   }
   return res.json({
     data: {
