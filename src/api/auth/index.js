@@ -1,31 +1,38 @@
 import bcrypt from 'bcrypt';
+import { config } from 'dotenv';
 import { Router } from 'express';
 import { sign } from 'jsonwebtoken';
 
 import { loginValidator, signValidator } from '../../middleware/validator';
 import User from '../../models/user';
+import UserTimeTable from '../../models/userTimeTable';
 
 const auth = Router();
+config();
 
 auth.post('/sign-up', signValidator, async (req, res) => {
   // eslint-disable-next-line
   const { name, nickName, password, email, phone } = req.body;
   const hash = await bcrypt.hash(password, 10);
   const userData = await User.findOne({ where: { nickName } });
-  if (userData) {
+  const emailData = await User.findOne({ where: { email } });
+  if (userData || emailData) {
     return res.status(409).json({
       error: {
         message: '이미 가입된 이메일입니다. 로그인을 진행해주세요.',
       },
     });
   }
-  await User.create({
+  const createUser = await User.create({
     name,
     // eslint-disable-next-line camelcase
     nickName,
     password: hash,
     email,
     phone,
+  });
+  await UserTimeTable.create({
+    user_id: createUser.id,
   });
   return res.status(200).json({
     data: {
@@ -54,3 +61,5 @@ auth.post('/sign-in', loginValidator, async (req, res) => {
     },
   });
 });
+
+export default auth;
