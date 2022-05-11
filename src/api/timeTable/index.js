@@ -21,7 +21,7 @@ const attributes = [
   'eight_id',
   'nine_id',
 ];
-timeTable.get('/', loginValidator, async (req, res) => {
+timeTable.get('/', loginChecker, async (req, res) => {
   const token = req.header('x-access-token');
   const userData = verify(token, process.env.JWT_SECRET);
   const userTimeTables = await UserTimeTable.findOne({
@@ -52,6 +52,13 @@ timeTable.post('/', loginChecker, async (req, res) => {
   const { id } = req.body;
   const token = req.header('x-access-token');
   const userData = verify(token, process.env.JWT_SECRET);
+  if (FullTimeTable.findOne({ where: { id } })) {
+    return res.status(401).json({
+      error: {
+        message: '없는 시간표 입니다.',
+      },
+    });
+  }
   const userTimeTables = await UserTimeTable.findOne({
     attributes,
     where: {
@@ -135,6 +142,19 @@ timeTable.get('/entire', loginChecker, async (req, res) => {
       timeTables,
     },
   });
+});
+
+timeTable.post('/admin', loginChecker, async (req, res) => {
+  // eslint-disable-next-line prefer-destructuring
+  const { subject_name, time, professor_name, professor_email, lecture_room } = req.body;
+  await FullTimeTable.create({
+    subject_name,
+    time,
+    professor_name,
+    professor_email,
+    lecture_room,
+  });
+  return res.json('정상');
 });
 
 export default timeTable;
