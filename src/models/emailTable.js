@@ -4,13 +4,19 @@ class EmailTable extends Model {
   static init(sequelize) {
     return super.init(
       {
-        sander_name: {
+        sender_name: {
           type: DataTypes.STRING(20),
           allowNull: true,
         },
         receive_name: {
           type: DataTypes.STRING(20),
           allowNull: true,
+        },
+        text: {
+          type: DataTypes.STRING,
+        },
+        subject: {
+          type: DataTypes.STRING,
         },
       },
       {
@@ -25,7 +31,7 @@ class EmailTable extends Model {
 
   static associate(db) {
     db.EmailTable.belongsTo(db.User, {
-      foreignKey: { name: 'sand_id', allowNull: false },
+      foreignKey: { name: 'send_id', allowNull: false },
       sourceKey: 'id',
       onDelete: 'CASCADE',
     });

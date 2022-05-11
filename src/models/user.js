@@ -34,7 +34,7 @@ class User extends Model {
 
   static associate(db) {
     db.User.hasMany(db.EmailTable, {
-      foreignKey: { name: 'sand_id', allowNull: false },
+      foreignKey: { name: 'send_id', allowNull: false },
       sourceKey: 'id',
     });
     db.User.hasOne(db.UserTimeTable, {

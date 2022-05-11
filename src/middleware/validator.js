@@ -74,3 +74,30 @@ export function loginValidator(req, res, next) {
   }
   return next();
 }
+
+export function sendMailValidator(req, res, next) {
+  // eslint-disable-next-line prefer-destructuring
+  const { professor_email, text, subject } = req.body;
+  if (!regEmail.test(professor_email) && professor_email.length > 30) {
+    return res.status(400).json({
+      error: {
+        message: '이메일 형식이 올바르지 않습니다.',
+      },
+    });
+  }
+  if (!text) {
+    return res.status(400).json({
+      error: {
+        message: '내용을 입력해주세요',
+      },
+    });
+  }
+  if (!subject) {
+    return res.status(400).json({
+      error: {
+        message: '제목을 입력해주세요',
+      },
+    });
+  }
+  return next();
+}
