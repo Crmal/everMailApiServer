@@ -11,7 +11,7 @@ config();
 app.use(json());
 
 app.get('/', async (req, res) => {
-  res.send('everymail');
+  res.json('everymail');
 });
 app.use('/api', apiRouter);
 // 디비 연결
