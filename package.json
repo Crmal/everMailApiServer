@@ -27,6 +27,7 @@
     "url": "^0.11.0"
   },
   "scripts": {
-    "dev": "nodemon src/index.js --exec babel-node"
+    "dev": "nodemon src/index.js --exec babel-node",
+    "start": "babel-node src/index.js"
   }
 }
