@@ -1,3 +1,4 @@
+import cors from 'cors';
 import { config } from 'dotenv';
 import express, { json } from 'express';
 
@@ -10,6 +11,10 @@ const port = 3000;
 config();
 app.use(json());
 
+const corsOptions = {
+  origin: [/^http?:\/\/everymail.netlify.app$/],
+};
+app.use(cors(corsOptions));
 app.get('/', async (req, res) => {
   res.json('everymail');
 });
