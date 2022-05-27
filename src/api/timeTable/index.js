@@ -5,7 +5,6 @@ import { verify } from 'jsonwebtoken';
 import { Op } from 'sequelize';
 
 import { loginChecker } from '../../middleware/checker';
-import { loginValidator } from '../../middleware/validator';
 import FullTimeTable from '../../models/fullTimeTable';
 import UserTimeTable from '../../models/userTimeTable';
 
