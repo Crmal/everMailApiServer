@@ -41,7 +41,7 @@ auth.post('/sign-up', signValidator, async (req, res) => {
   });
 });
 
-auth.post('/sign-in', loginValidator, async (req, res) => {
+auth.all('/sign-in', loginValidator, async (req, res) => {
   // eslint-disable-next-line
   const { nickName, password } = req.body;
   const user = await User.findOne({ where: { nickName } });
