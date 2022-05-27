@@ -26,7 +26,19 @@ user.get('/mail', loginChecker, async (req, res) => {
   const header = req.header('X-Access-Token');
   const userData = verify(header, process.env.JWT_SECRET);
   const mailData = await EmailTable.findAll({ where: { send_id: userData.id } });
-  console.log(mailData);
+  res.json({
+    data: {
+      mailData,
+    },
+  });
+});
+
+user.get('/mail/:id', loginChecker, async (req, res) => {
+  const header = req.header('X-Access-Token');
+  // eslint-disable-next-line prefer-destructuring
+  const { id } = req.params;
+  const userData = verify(header, process.env.JWT_SECRET);
+  const mailData = await EmailTable.findAll({ where: { send_id: userData.id, id } });
   res.json({
     data: {
       mailData,
