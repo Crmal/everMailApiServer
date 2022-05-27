@@ -26,6 +26,7 @@ user.get('/mail', loginChecker, async (req, res) => {
   const header = req.header('X-Access-Token');
   const userData = verify(header, process.env.JWT_SECRET);
   const mailData = await EmailTable.findAll({ where: { send_id: userData.id } });
+  console.log(mailData);
   res.json({
     data: {
       mailData,

@@ -37,12 +37,17 @@ sendMail.post('/', loginChecker, sendMailValidator, async (req, res) => {
     subject,
     html: text,
   });
+  const name = ['김성철', '배종우', '신서용', '강환일', '정재희'];
+  const subject_nameing = ['파이썬', '파이썬', '회로이론', '회로이론', '인터넷 프로그래밍'];
+  const sPick = Math.floor(Math.random() * name.length);
   await EmailTable.create({
     sender_name: userId.email,
     receive_name: professor_email,
     subject,
     text,
     send_id: userId.id,
+    subject_name: subject_nameing[sPick],
+    receive: name[sPick],
   });
   res.json({
     data: {

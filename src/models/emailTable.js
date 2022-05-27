@@ -18,6 +18,12 @@ class EmailTable extends Model {
         subject: {
           type: DataTypes.STRING,
         },
+        subject_name: {
+          type: DataTypes.STRING,
+        },
+        receive: {
+          type: DataTypes.STRING,
+        },
       },
       {
         sequelize,
