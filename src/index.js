@@ -11,10 +11,7 @@ const port = 3000;
 config();
 app.use(json());
 
-const corsOptions = {
-  origin: [/^http?:\/\/everymail.netlify.app$/, /^http?:\/\/127.0.0.1:5500$/],
-};
-app.use(cors(corsOptions));
+app.use(cors());
 app.get('/', async (req, res) => {
   res.json('everymail');
 });
