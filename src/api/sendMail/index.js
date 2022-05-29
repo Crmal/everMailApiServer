@@ -30,7 +30,7 @@ sendMail.post('/', loginChecker, sendMailValidator, async (req, res) => {
   });
 
   // eslint-disable-next-line prefer-destructuring
-  const { professor_email, text, subject } = req.body;
+  const { professor_email, text, subject, subject_name, receive } = req.body;
   await transporter.sendMail({
     from: '박재민',
     to: professor_email,
@@ -46,8 +46,10 @@ sendMail.post('/', loginChecker, sendMailValidator, async (req, res) => {
     subject,
     text,
     send_id: userId.id,
-    subject_name: subject_nameing[sPick],
-    receive: name[sPick],
+    // eslint-disable-next-line no-unneeded-ternary
+    subject_name: subject_name ? subject_name : subject_nameing[sPick],
+    // eslint-disable-next-line no-unneeded-ternary
+    receive: receive ? receive : name[sPick],
   });
   res.json({
     data: {
