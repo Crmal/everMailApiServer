@@ -20,7 +20,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-sendMail.post('/', loginChecker, sendMailValidator, async (req, res) => {
+sendMail.post('/', loginChecker, async (req, res) => {
   const header = req.header('X-Access-Token');
   const userData = verify(header, process.env.JWT_SECRET);
   const userId = await User.findOne({
